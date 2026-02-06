@@ -1,31 +1,22 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import {
-  SignUpButton,
-  SignInButton,
-  SignedOut,
-  SignedIn,
-  UserButton,
-} from "@clerk/nextjs";
+import Header from "@/components/landing/Header";
+import Hero from "@/components/landing/Hero";
+import HowItWorks from "@/components/landing/HowItWorks";
+import WhatToAsk from "@/components/landing/WhatToAsk";
+import PricingSection from "@/components/landing/PricingSection";
+import Footer from "@/components/landing/Footer";
+import CTA from "@/components/landing/CTA";
+
 
 export default function Home() {
   return (
-    <div>
-      <header className="flex justify-end items-center p-4 gap-4 h-16">
-        {/* Show the sign-in and sign-up buttons when the user is signed out */}
-        <SignedOut>
-          <SignInButton />
-          <SignUpButton>
-            <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-              Sign Up
-            </button>
-          </SignUpButton>
-        </SignedOut>
-        {/* Show the user button when the user is signed in */}
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </header>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <Hero />
+      <HowItWorks />
+      <WhatToAsk />
+      <PricingSection />
+      <CTA />
+      <Footer />
     </div>
   );
 }
