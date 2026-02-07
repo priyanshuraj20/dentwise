@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import UserSync from "@/components/ui/UserSync";
+import TanStackProvider from "@/components/providers/TanStackProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,50 +27,52 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        variables: {
-          colorPrimary: "#f4a261",
-          colorBackground: "rgba(12,12,14,0.88)",
-          colorText: "#e5e5e5",
-          borderRadius: "18px",
-        },
+    <TanStackProvider>
+      <ClerkProvider
+        appearance={{
+          variables: {
+            colorPrimary: "#f4a261",
+            colorBackground: "rgba(12,12,14,0.88)",
+            colorText: "#e5e5e5",
+            borderRadius: "18px",
+          },
 
-        elements: {
-          card: "backdrop-blur-xl bg-background/80 border border-white/10 shadow-2xl",
+          elements: {
+            card: "backdrop-blur-xl bg-background/80 border border-white/10 shadow-2xl",
 
-          headerTitle: "text-foreground text-xl font-semibold",
-          headerSubtitle: "text-muted-foreground",
+            headerTitle: "text-foreground text-xl font-semibold",
+            headerSubtitle: "text-muted-foreground",
 
-          formFieldInput:
-            "bg-background/60 border-white/10 focus:ring-primary/40 rounded-xl placeholder:text-muted-foreground",
+            formFieldInput:
+              "bg-background/60 border-white/10 focus:ring-primary/40 rounded-xl placeholder:text-muted-foreground",
 
-          formFieldInputText:
-            "text-foreground placeholder:text-muted-foreground",
+            formFieldInputText:
+              "text-foreground placeholder:text-muted-foreground",
 
-          formButtonPrimary:
-            "!bg-[#f4a261] !text-black hover:!bg-[#f4a261]/90 rounded-xl shadow-[0_0_22px_rgba(244,162,97,0.4)]",
+            formButtonPrimary:
+              "!bg-[#f4a261] !text-black hover:!bg-[#f4a261]/90 rounded-xl shadow-[0_0_22px_rgba(244,162,97,0.4)]",
 
-          /* 🔥 FORCE GOOGLE BUTTON */
-          socialButtonsBlockButton:
-            "!bg-[#f4a261] !text-black hover:!bg-[#f4a261]/90 rounded-xl shadow-[0_0_22px_rgba(244,162,97,0.4)]",
+            /* 🔥 FORCE GOOGLE BUTTON */
+            socialButtonsBlockButton:
+              "!bg-[#f4a261] !text-black hover:!bg-[#f4a261]/90 rounded-xl shadow-[0_0_22px_rgba(244,162,97,0.4)]",
 
-          socialButtonsBlockButtonText: "!text-black font-medium",
+            socialButtonsBlockButtonText: "!text-black font-medium",
 
-          socialButtonsBlockButtonIcon: "brightness-100",
+            socialButtonsBlockButtonIcon: "brightness-100",
 
-          footerActionLink: "text-[#f4a261] hover:underline",
-        },
-      }}
-    >
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased dark bg-background text-foreground`}
-        >
-          <UserSync />
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+            footerActionLink: "text-[#f4a261] hover:underline",
+          },
+        }}
+      >
+        <html lang="en">
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased dark bg-background text-foreground`}
+          >
+            <UserSync />
+            {children}
+          </body>
+        </html>
+      </ClerkProvider>
+    </TanStackProvider>
   );
 }
