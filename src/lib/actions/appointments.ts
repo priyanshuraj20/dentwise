@@ -43,14 +43,16 @@ export async function getUserAppointments() {
   try {
     // get authenticated user from Clerk
     const { userId } = await auth();
-    if (!userId) throw new Error("You must be logged in to view appointments");
+     if (!userId) return { totalAppointments: 0, completedAppointments: 0 };
 
     // find user by clerkId from authenticated session
     const user = await prisma.user.findUnique({ where: { clerkId: userId } });
-    if (!user)
-      throw new Error(
-        "User not found. Please ensure your account is properly set up.",
-      );
+    if (!user) {
+      return {
+        totalAppointments: 0,
+        completedAppointments: 0,
+      };
+    } 
 
     const appointments = await prisma.appointment.findMany({
       where: { userId: user.id },
@@ -68,14 +70,20 @@ export async function getUserAppointments() {
   }
 }
 
-export async function getUserAppointmentStats() {
+export async function   getUserAppointmentStats() {
   try {
     const { userId } = await auth();
     if (!userId) throw new Error("You must be authenticated");
 
     const user = await prisma.user.findUnique({ where: { clerkId: userId } });
 
-    if (!user) throw new Error("User not found");
+   if (!user) {
+     return {
+       totalAppointments: 0,
+       completedAppointments: 0,
+     };
+   }
+
 
     // these calls will run in parallel, instead of waiting each other
     const [totalCount, completedCount] = await Promise.all([

@@ -1,32 +1,30 @@
 "use server";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "../prisma";
 
 export async function syncUser() {
-  try {
-    const user = await currentUser();
-    if (!user) return null;
+  const user = await currentUser();
+  if (!user) return null;
 
-    const existingUser = await prisma.user.findUnique({
-      where: { clerkId: user.id },
-    });
+  const email = user.emailAddresses[0]?.emailAddress;
+  if (!email) return null;
 
-    if (existingUser) return existingUser;
+  const existingUser = await prisma.user.findUnique({
+    where: { clerkId: user.id },
+  });
 
-    const dbUser = await prisma.user.create({
-      data: {
-        clerkId: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.emailAddresses?.[0]?.emailAddress ?? "",
-        phone: user.phoneNumbers?.[0]?.phoneNumber ?? null,
-      },
-    });
+  if (existingUser) return existingUser;
 
-    return dbUser;
-  } catch (error) {
-    console.error("Error in syncUser server action", error);
-    return null;
-  }
+  const dbUser = await prisma.user.create({
+    data: {
+      clerkId: user.id,
+      email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phone: user.phoneNumbers[0]?.phoneNumber,
+    },
+  });
+
+  return dbUser;
 }

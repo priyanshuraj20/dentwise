@@ -5,22 +5,30 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { CalendarIcon, ClockIcon, UserIcon } from "lucide-react";
 
 async function NextAppointment() {
-  const appointments = await getUserAppointments();
+  const appointmentsResult = await getUserAppointments();
+
+  // ✅ SAFETY: always normalize to array
+  const appointments = Array.isArray(appointmentsResult)
+    ? appointmentsResult
+    : [];
 
   // filter for upcoming CONFIRMED appointments only (today or future)
-  const upcomingAppointments =
-    appointments?.filter((appointment) => {
-      const appointmentDate = parseISO(appointment.date);
-      const today = new Date();
-      const isUpcoming =
-        isSameDay(appointmentDate, today) || isAfter(appointmentDate, today);
-      return isUpcoming && appointment.status === "CONFIRMED";
-    }) || [];
+  const upcomingAppointments = appointments.filter((appointment) => {
+    if (!appointment?.date) return false;
+
+    const appointmentDate = parseISO(appointment.date);
+    const today = new Date();
+
+    const isUpcoming =
+      isSameDay(appointmentDate, today) || isAfter(appointmentDate, today);
+
+    return isUpcoming && appointment.status === "CONFIRMED";
+  });
 
   // get the next appointment (earliest upcoming one)
   const nextAppointment = upcomingAppointments[0];
 
-  if (!nextAppointment) return <NoNextAppointments />; // no appointments, return nothing
+  if (!nextAppointment) return <NoNextAppointments />;
 
   const appointmentDate = parseISO(nextAppointment.date);
   const formattedDate = format(appointmentDate, "EEEE, MMMM d, yyyy");
@@ -34,11 +42,12 @@ async function NextAppointment() {
           Next Appointment
         </CardTitle>
       </CardHeader>
+
       <CardContent className="space-y-4">
         {/* Status Badge */}
         <div className="flex items-center justify-between">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
             <span className="text-sm font-medium text-primary">
               {isToday ? "Today" : "Upcoming"}
             </span>
@@ -59,7 +68,7 @@ async function NextAppointment() {
                 {nextAppointment.doctorName}
               </p>
               <p className="text-xs text-muted-foreground">
-                {nextAppointment.reason}
+                {nextAppointment.reason || "General consultation"}
               </p>
             </div>
           </div>

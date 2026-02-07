@@ -30,12 +30,12 @@ export default function RootLayout({
     <TanStackProvider>
       <ClerkProvider
         appearance={{
-          variables: {
-            colorPrimary: "#f4a261",
-            colorBackground: "rgba(12,12,14,0.88)",
-            colorText: "#e5e5e5",
-            borderRadius: "18px",
-          },
+          // variables: {
+          //   // colorPrimary: "#f4a261",
+          //   // colorBackground: "rgba(11,11,13,0.11)",
+          //   // colorText: "#e5e5e5",
+          //   borderRadius: "30px",
+          // },
 
           elements: {
             card: "backdrop-blur-xl bg-background/80 border border-white/10 shadow-2xl",
