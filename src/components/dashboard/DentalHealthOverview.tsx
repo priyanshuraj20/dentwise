@@ -1,4 +1,5 @@
 import { getUserAppointmentStats } from "@/lib/actions/appointments";
+import { useUserAppointmentStats } from "@/hooks/use-appointment";
 import { currentUser } from "@clerk/nextjs/server";
 import {
   Card,
