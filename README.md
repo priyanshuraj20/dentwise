@@ -3,7 +3,7 @@
 Dentwise is a modern full-stack **SaaS dental platform** that allows users to book dental appointments, interact with an **AI Voice Agent**, and manage subscriptions seamlessly.  
 Built with **Next.js App Router**, designed for scalability, performance, and real-world production use.
 
-<h2>🔗 **Live Demo:** https://www.dentwise.live</h2>
+<h2>🔗 **Live Demo:** https://dentwise-ochre-seven.vercel.app/</h2>
 
 ![Demo App](/public/screenshot-for-readme.png)
 
@@ -15,7 +15,7 @@ Built with **Next.js App Router**, designed for scalability, performance, and re
   - Email verification using 6-digit OTP
 - 📅 Smart appointment booking system
 - 🦷 3-Step Booking Flow  
-  *(Dentist → Service & Time → Confirmation)*
+  _(Dentist → Service & Time → Confirmation)_
 - 📩 Automated email notifications for bookings
 - 📊 Admin dashboard for managing appointments
 - 🗣️ **AI Voice Agent** powered by **Vapi** (Pro plans)
@@ -29,6 +29,7 @@ Built with **Next.js App Router**, designed for scalability, performance, and re
 ---
 
 ## 🧠 System Architecture
+
 User
 └── Next.js App (UI)
 ├── Clerk Authentication
@@ -41,31 +42,35 @@ User
 
 Deployment → Vercel (CI/CD + Custom Domain)
 
-
 ---
 
 ## 🛠️ Tech Stack
 
 **Frontend**
+
 - Next.js (App Router)
 - React
 - Tailwind CSS
 - shadcn/ui
 
 **Backend**
+
 - Next.js Server Actions
 - Prisma ORM
 - PostgreSQL
 
 **Auth & Payments**
+
 - Clerk Authentication
 - Clerk Subscriptions & Billing
 
 **AI & Services**
+
 - Vapi (AI Voice Agent)
 - Resend (Transactional Emails)
 
 **Dev & Deployment**
+
 - TanStack Query
 - Git & GitHub (PR-based workflow)
 - Vercel (Production Deployment)
@@ -96,7 +101,6 @@ npx prisma generate
 5️⃣ Run the development server
 npm run dev
 
-
 App will be available at:
 
 http://localhost:3000
@@ -114,4 +118,3 @@ Custom domain integration
 Build Command:
 
 prisma generate && next build
-
